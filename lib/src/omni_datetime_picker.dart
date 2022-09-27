@@ -32,6 +32,8 @@ class OmniDateTimePicker extends StatefulWidget {
   final Color? tabTextColor;
   final Color? unselectedTabBackgroundColor;
   final Color? buttonTextColor;
+  final int minutesInterval;
+  final bool isForce2Digits;
   final TextStyle? timeSpinnerTextStyle;
   final TextStyle? timeSpinnerHighlightedTextStyle;
   final Radius? borderRadius;
@@ -53,6 +55,8 @@ class OmniDateTimePicker extends StatefulWidget {
     this.timeSpinnerTextStyle,
     this.timeSpinnerHighlightedTextStyle,
     this.borderRadius,
+    this.minutesInterval = 1,
+    this.isForce2Digits = false,
   }) : super(key: key);
 
   @override
@@ -123,42 +127,50 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker>
                           dateTime.year,
                           dateTime.month,
                           dateTime.day,
-                          widget.type == OmniDateTimePickerType.date ? 0 : startDateTime.hour,
-                          widget.type == OmniDateTimePickerType.date ? 0 : startDateTime.minute,
+                          widget.type == OmniDateTimePickerType.date
+                              ? 0
+                              : startDateTime.hour,
+                          widget.type == OmniDateTimePickerType.date
+                              ? 0
+                              : startDateTime.minute,
                         );
                       },
                     ),
-                    widget.type == OmniDateTimePickerType.dateAndTime ? Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: TimePickerSpinner(
-                        is24HourMode: widget.is24HourMode ?? false,
-                        isShowSeconds: widget.isShowSeconds ?? false,
-                        normalTextStyle: widget.timeSpinnerTextStyle ??
-                            TextStyle(
-                                fontSize: 18,
-                                color:
-                                    widget.calendarTextColor ?? Colors.black54),
-                        highlightedTextStyle: widget
-                                .timeSpinnerHighlightedTextStyle ??
-                            TextStyle(
-                                fontSize: 24,
-                                color:
-                                    widget.calendarTextColor ?? Colors.black),
-                        time: startDateTime,
-                        onTimeChange: (dateTime) {
-                          DateTime tempStartDateTime = DateTime(
-                            startDateTime.year,
-                            startDateTime.month,
-                            startDateTime.day,
-                            dateTime.hour,
-                            dateTime.minute,
-                            dateTime.second,
-                          );
+                    widget.type == OmniDateTimePickerType.dateAndTime
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: TimePickerSpinner(
+                              is24HourMode: widget.is24HourMode ?? false,
+                              isShowSeconds: widget.isShowSeconds ?? false,
+                              minutesInterval: widget.minutesInterval,
+                              isForce2Digits: widget.isForce2Digits,
+                              normalTextStyle: widget.timeSpinnerTextStyle ??
+                                  TextStyle(
+                                      fontSize: 18,
+                                      color: widget.calendarTextColor ??
+                                          Colors.black54),
+                              highlightedTextStyle:
+                                  widget.timeSpinnerHighlightedTextStyle ??
+                                      TextStyle(
+                                          fontSize: 24,
+                                          color: widget.calendarTextColor ??
+                                              Colors.black),
+                              time: startDateTime,
+                              onTimeChange: (dateTime) {
+                                DateTime tempStartDateTime = DateTime(
+                                  startDateTime.year,
+                                  startDateTime.month,
+                                  startDateTime.day,
+                                  dateTime.hour,
+                                  dateTime.minute,
+                                  dateTime.second,
+                                );
 
-                          startDateTime = tempStartDateTime;
-                        },
-                      ),
-                    ) : Container(),
+                                startDateTime = tempStartDateTime;
+                              },
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
               ),
