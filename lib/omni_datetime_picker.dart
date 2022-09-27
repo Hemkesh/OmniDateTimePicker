@@ -32,6 +32,8 @@ Future<DateTime?> showOmniDateTimePicker({
   TextStyle? timeSpinnerTextStyle,
   TextStyle? timeSpinnerHighlightedTextStyle,
   Radius? borderRadius,
+  int minutesInterval = 1,
+  bool isForce2Digits = false,
 }) {
   return showDialog(
     context: context,
@@ -52,6 +54,8 @@ Future<DateTime?> showOmniDateTimePicker({
         timeSpinnerTextStyle: timeSpinnerTextStyle,
         timeSpinnerHighlightedTextStyle: timeSpinnerHighlightedTextStyle,
         borderRadius: borderRadius,
+        minutesInterval: minutesInterval,
+        isForce2Digits: isForce2Digits,
       );
     },
   );
